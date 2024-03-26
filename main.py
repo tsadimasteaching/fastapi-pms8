@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from models import User
 from typing import List
 from db import init_db
+from routes.user import router as userrouter
+
 app = FastAPI()
 
 user1 = User(name="Nikos", surname="Tsertos", email="nick@hua.gr")
@@ -22,4 +24,5 @@ def create_user(user: User) -> User:
     userlist.append(user)
     return user
 
+app.include_router(userrouter, prefix='/user', tags=["User"])
 
