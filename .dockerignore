@@ -1,0 +1,10 @@
+fastapi-venv
+
+__pycache__
+
+Dockerfile
+
+*.log
+
+*.py[oc]
+
