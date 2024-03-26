@@ -1,6 +1,6 @@
 # Virtual Environment
 favenv/
-fastaapi-venv/
+fastapi-venv/
 
 # Python #
 *.py[cod]
