@@ -3,6 +3,7 @@ from models import User
 from typing import List
 from db import init_db
 from routes.user import router as userrouter
+from routes.job import router as jobrouter
 
 app = FastAPI()
 
@@ -25,4 +26,4 @@ def create_user(user: User) -> User:
     return user
 
 app.include_router(userrouter, prefix='/user', tags=["User"])
-
+app.include_router(jobrouter, prefix='/job', tags=["Job"])
