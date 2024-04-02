@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/usr/data/app
     environment:
-      - DB_URL=postgresql+asyncpg://dbuser:pass123@db:5432/pms8
+      - DB_URL=postgresql+asyncpg://postgres:pass123@db:5432/pms8
 #    env_file:
 #      - .env
     healthcheck:
@@ -31,7 +31,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=dbuser
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=pass123
       - POSTGRES_DB=pms8
     healthcheck:
@@ -43,8 +43,7 @@ services:
       retries: 3
     volumes:
       - 'pms8db:/var/lib/postgresql/data/'
-      # - './assets/postgres/init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql'
-
+      - './assets/postgres/init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql'
   web:
     image: nginx:latest
     volumes:
@@ -53,5 +52,46 @@ services:
       - "80:80"
     depends_on:
     -  fastapi
+
+  keycloak:
+    image: 'quay.io/keycloak/keycloak:24.0'
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db
+      DB_DATABASE: keycloak
+      DB_SCHEMA: public
+      KC_DB_USERNAME: postgres
+      # DB_SCHEMA: public
+      KC_DB_PASSWORD: pass123
+      KEYCLOAK_USER: keycloakuser
+      KEYCLOAK_PASSWORD: keycloakpassword
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      PROXY_ADDRESS_FORWARDING: 'true'
+      KEYCLOAK_LOGLEVEL: DEBUG
+    volumes:
+      - ./assets/keycloak:/opt/keycloak/data/import:ro
+    entrypoint:
+      [
+        "/opt/keycloak/bin/kc.sh",
+        "start",
+        "--import-realm",
+        "--optimized",
+        "--http-enabled=true",
+        "--hostname-strict-https=false",
+        "--hostname-strict=false",
+        "--proxy=edge"
+      ]
+    ports:
+      - '8080:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: 'curl --fail http://localhost:9990 || exit 1'
+      interval: 30s
+      timeout: 30s
+      retries: 3
 volumes:
   pms8db:
