@@ -16,14 +16,7 @@ userlist.append(user1)
 async def startup():
     await init_db()
 
-@app.get("/")
-def test()-> List[User]:
-    return userlist
 
-@app.post("/user")
-def create_user(user: User) -> User:
-    userlist.append(user)
-    return user
 
 app.include_router(userrouter, prefix='/user', tags=["User"])
 app.include_router(jobrouter, prefix='/job', tags=["Job"])
