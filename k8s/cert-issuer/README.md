@@ -18,3 +18,7 @@ edit file k8s/fastapi/fastapi-ingress-ssl.yaml, replace host
 ```bash
 kubectl apply -f k8s/fastapi/fastapi-ingress-ssl.yaml
 ```
+
+# Links
+* [cert-manager](https://cert-manager.io/docs/installation/helm/)
+* [Troubleshooting cert-manager](https://cert-manager.io/docs/troubleshooting/)
