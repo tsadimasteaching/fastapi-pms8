@@ -1,6 +1,6 @@
 ---
 # Every test file has one or more tests...
-test_name: Test Artists
+test_name: Test Users
 
 # ...and each test has one or more stages (e.g. an HTTP request)
 stages:
@@ -15,7 +15,7 @@ stages:
       json:
         []
 
-  - name: test add an artist
+  - name: test add a user
 
     request:
       url: http://localhost:8000/user/
