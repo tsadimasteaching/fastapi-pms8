@@ -6,6 +6,7 @@ pipeline {
             steps {
                 sh '''
                 docker compose up -d --build
+                while ! wget -S --spider http://localhost:8000/docs; do sleep 1; done
                 docker compose exec -T fastapi tavern-ci tests
             '''
             }
