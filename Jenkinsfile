@@ -38,8 +38,8 @@ pipeline {
                     HEAD_COMMIT=$(git rev-parse --short HEAD)
                     TAG=$HEAD_COMMIT-$BUILD_ID
                     kubectl config use-context microk8s
-                    kubectl set image -f k8s/fastapi-deployment.yaml fastapi=$DOCKER_PREFIX:$TAG
-                    kubectl apply -f k8s/fastapi-deployment.yaml
+                    kubectl set image -f k8s/fastapi/fastapi-deployment.yaml fastapi=$DOCKER_PREFIX:$TAG
+                    kubectl apply -f k8s/fastapi/fastapi-deployment.yaml
                     #kubectl set image deployment/fastapi-deployment fastapi=$DOCKER_PREFIX:$TAG
                     RUNNING_TAG=$(kubectl get pods  -o=jsonpath="{.items[*].spec.containers[*].image}" -l component=fastapi | grep $TAG)
                     FOUND=$(echo $RUNNING_TAG | wc -l)
