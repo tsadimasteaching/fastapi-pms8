@@ -41,9 +41,8 @@ pipeline {
                     if kubectl get deploy | grep 'fastapi-deployment'; then
                         kubectl set image -f k8s/fastapi/fastapi-deployment.yaml fastapi=$DOCKER_PREFIX:$TAG
                     else
-                        kubectl patch -f k8s/fastapi/fastapi-deployment.yaml --type=json -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/image", "value":"$DOCKER_PREFIX:$TAG"}]'
                         kubectl apply -f k8s/fastapi/fastapi-deployment.yaml
-
+                        kubectl set image -f k8s/fastapi/fastapi-deployment.yaml fastapi=$DOCKER_PREFIX:$TAG
                     fi
                   
                     RUNNING_TAG=$(kubectl get pods  -o=jsonpath="{.items[*].spec.containers[*].image}" -l component=fastapi | grep $TAG)
