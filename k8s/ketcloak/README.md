@@ -19,3 +19,4 @@ kubectl apply -f keycloak-ingress.yaml
 ```
 
 Note: in case you need https, you need to add A DNS record for your IP and Domain.
+Also fix hostname in deployment.yaml and ingress.yaml
