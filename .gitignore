@@ -20,3 +20,6 @@ project/media
 
 .idea/
 .vscode/
+
+#docker config file
+.dockerconfig.json

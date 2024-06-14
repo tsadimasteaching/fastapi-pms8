@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: fastapi
+  template:
+    metadata:
+      labels:
+        component: fastapi
+    spec:
+      containers:
+        - name: fastapi
+          image: 'ghcr.io/tsadimas/pms8-fastapi:latest'
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: fastapi-config
+      imagePullSecrets:
+        - name: registry-credentials

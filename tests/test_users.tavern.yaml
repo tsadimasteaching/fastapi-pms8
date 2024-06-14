@@ -1,0 +1,34 @@
+---
+# Every test file has one or more tests...
+test_name: Test Users
+
+# ...and each test has one or more stages (e.g. an HTTP request)
+stages:
+  - name: test get /user
+
+    request:
+      url: http://localhost:8000/user/
+      method: GET
+
+    response:
+      status_code: 200
+      json:
+        []
+
+  - name: test add a user
+
+    request:
+      url: http://localhost:8000/user/
+      method: POST
+      json:
+        name: "Manos"
+        surname: "Loizos"
+        email: "manos@loizos.com"
+
+    response:
+      status_code: 200
+      json:
+        id: 1
+        name: "Manos"
+        surname: "Loizos"
+        email: "manos@loizos.com"

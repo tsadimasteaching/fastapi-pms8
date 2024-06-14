@@ -35,3 +35,28 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```bash
 docker-compose up -d
 ```
+
+# Container Registry (github packages)
+
+## Github Packages
+* create personal access token (settings --> Developer settings -- > Personal Access Tokens), select classic
+* select write:packages
+* save the token to a file
+* to see packages, go to your github profile and select tab Packages
+* tag an image
+```bash
+docker build -t ghcr.io/<GITHUB-USERNAME>/pms8-fastapi:latest -f fastapi.Dockerfile .
+```
+* login to docker registry
+```bash
+cat ~/github-image-repo.txt | docker login ghcr.io -u <GITHUB-USERNAME> --password-stdin
+```
+* push image
+```bash
+docker push ghcr.io/<GITHUB-USERNAME>/pms8-fastapi:latest
+```
+
+## create dockercongig secret
+```bash
+kubectl create secret docker-registry registry-credentials --from-file=.dockerconfigjson=k8s/.dockerconfig.json
+```
