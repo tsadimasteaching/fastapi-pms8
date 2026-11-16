@@ -45,7 +45,7 @@ docker-compose up -d
 * to see packages, go to your github profile and select tab Packages
 * tag an image
 ```bash
-docker build -t ghcr.io/<GITHUB-USERNAME>/pms8-fastapi:latest -f fastapi.Dockerfile .
+docker build -t ghcr.io/<GITHUB-USERNAME>/pms8-fastapi:latest -f nonroot.Dockerfile .
 ```
 * login to docker registry
 ```bash
